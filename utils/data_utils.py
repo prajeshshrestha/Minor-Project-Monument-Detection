@@ -69,8 +69,9 @@ def get_dataset(name):
         dataset = tensorflow dataset split
         info = tensorflow dataset info
     """
-    tfrecord_name = 'monumnet-'+name+'.tfrecord'
-    path = '/content/drive/MyDrive/Colab Datasets/' + tfrecord_name
+    tfrecord_name = name+'.tfrecord'
+    # path = '/content/drive/MyDrive/Colab Datasets/' + tfrecord_name
+    path = '/kaggle/input/kathmandu-valley-monuments/' + tfrecord_name
     dataset = tf.data.TFRecordDataset(path)
     dataset = dataset.map(_parse_data)
     dataset = dataset.map(_bytestring)
