@@ -23,17 +23,15 @@ else:
 #
 hyper_params = train_utils.get_hyper_params(backbone)
 #
-train_data = data_utils.get_dataset("train")
-val_data = data_utils.get_dataset("test")
-train_total_items = 506
-val_total_items = 173
+train_data, train_total_items = data_utils.get_dataset("train")
+val_data, val_total_items = data_utils.get_dataset("validation")
 
 labels = label_generator(args.label_path, 'list-type')
 labels = ["bg"] + labels
 hyper_params["total_labels"] = len(labels)
 img_size = hyper_params["img_size"]
 
-train_data = train_data.map(lambda x : data_utils.preprocessing(x, img_size, img_size, augmentation.apply))
+train_data = train_data.map(lambda x : data_utils.preprocessing(x, img_size, img_size))
 val_data = val_data.map(lambda x : data_utils.preprocessing(x, img_size, img_size))
 
 data_shapes = data_utils.get_data_shapes()
