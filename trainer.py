@@ -26,7 +26,7 @@ hyper_params = train_utils.get_hyper_params(backbone)
 train_data, train_total_items = data_utils.get_dataset("train")
 val_data, val_total_items = data_utils.get_dataset("validation")
 
-labels = label_generator(args.label_path, 'list-type')
+labels = label_generator.csv_to_label_map(args.label_path, 'list-type')
 labels = ["bg"] + labels
 hyper_params["total_labels"] = len(labels)
 img_size = hyper_params["img_size"]
