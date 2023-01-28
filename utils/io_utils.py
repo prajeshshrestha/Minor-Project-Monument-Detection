@@ -25,7 +25,7 @@ def get_model_path(model_type):
     main_path = "trained"
     if not os.path.exists(main_path):
         os.makedirs(main_path)
-    model_path = os.path.join(main_path, "ssd_{}_model_weights.h5".format(model_type))
+    model_path = os.path.join('./', "ssd_{}_model_weights.h5".format(model_type))
     return model_path
 
 def handle_args():

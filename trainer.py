@@ -11,7 +11,7 @@ if args.handle_gpu:
     io_utils.handle_gpu_compatibility()
 
 batch_size = 32
-epochs = 150
+epochs = 15
 load_weights = False
 backbone = args.backbone
 io_utils.is_valid_backbone(backbone)
@@ -61,7 +61,7 @@ learning_rate_callback = LearningRateScheduler(train_utils.scheduler, verbose=0)
 
 step_size_train = train_utils.get_step_size(train_total_items, batch_size)
 step_size_val = train_utils.get_step_size(val_total_items, batch_size)
-ssd_model.fit(ssd_train_feed,
+history = ssd_model.fit(ssd_train_feed,
               steps_per_epoch=step_size_train,
               validation_data=ssd_val_feed,
               validation_steps=step_size_val,

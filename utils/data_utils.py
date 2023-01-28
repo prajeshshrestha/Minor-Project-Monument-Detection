@@ -3,6 +3,7 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from PIL import Image
 import numpy as np
+import piexif
 
 def preprocessing(image_data, final_height, final_width, augmentation_fn=None, evaluate=False):
     """Image resizing operation handled before batch operations.
@@ -118,6 +119,14 @@ def get_custom_imgs(custom_image_path):
         break
     return img_paths
 
+def check_and_rotate(img):
+    if "exif" in img.info:
+        exif_dict = piexif.load(img.info['exif'])
+    if piexif.ImageIFD.Orientation in exif_dict['0th']:
+        if exif_dict['0th'][piexif.ImageIFD.Orientation] == 6:
+            return True
+    return False
+
 def custom_data_generator(img_paths, final_height, final_width):
     """Yielding custom entities as dataset.
     inputs:
@@ -131,8 +140,11 @@ def custom_data_generator(img_paths, final_height, final_width):
     """
     for img_path in img_paths:
         image = Image.open(img_path)
+        to_rotate = check_and_rotate(image)
         resized_image = image.resize((final_width, final_height), Image.LANCZOS)
         img = np.array(resized_image)
+        if to_rotate:
+            img = tf.image.rot90(img, k = 3)
         img = tf.image.convert_image_dtype(img, tf.float32)
         yield img, tf.constant([[]], dtype=tf.float32), tf.constant([], dtype=tf.int32)
 
