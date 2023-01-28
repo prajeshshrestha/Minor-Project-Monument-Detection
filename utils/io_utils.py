@@ -40,7 +40,7 @@ def handle_args():
                         default="mobilenet_v2",
                         metavar="['mobilenet_v2', 'vgg16']",
                         help="Which backbone used for the ssd")
-    parser.add_argument("--label_path", required = True)
+    parser.add_argument("--label_path", required = False)
     args = parser.parse_args()
     return args
 

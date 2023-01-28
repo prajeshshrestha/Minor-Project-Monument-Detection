@@ -43,7 +43,6 @@ def _parse_data(unparsed_example):
     return tf.io.parse_single_example(unparsed_example, image_feature_description)
 
 def _bytestring(parsed_example):
-    print(type(parsed_example))
     byte_string = parsed_example['image/encoded']
     image = tf.io.decode_image(byte_string)
     image = tf.reshape(image, [300, 300, 3])
@@ -58,7 +57,7 @@ def _bytestring(parsed_example):
     return output_dict
     
 
-def get_dataset(name):
+def get_dataset(name, dir_ = None):
     """Get tensorflow dataset split and info.
     inputs:
         name = name of the dataset, voc/2007, voc/2012, etc.
@@ -69,9 +68,12 @@ def get_dataset(name):
         dataset = tensorflow dataset split
         info = tensorflow dataset info
     """
-    tfrecord_name = name+'.tfrecord'
+    tfrecord_name = name + '.tfrecord'
     # path = '/content/drive/MyDrive/Colab Datasets/' + tfrecord_name
-    path = '/kaggle/input/kathmandu-valley-monuments/' + tfrecord_name
+    if dir_ is not None:
+        path = dir_ + tfrecord_name
+    else:
+        path = '/kaggle/input/kathmandu-valley-monuments/' + tfrecord_name
     dataset = tf.data.TFRecordDataset(path)
     dataset = dataset.map(_parse_data)
     dataset = dataset.map(_bytestring)

@@ -27,7 +27,11 @@ def update_stats(pred_bboxes, pred_labels, pred_scores, gt_boxes, gt_labels, sta
         if gt_label == -1:
             continue
         gt_label = int(gt_label)
-        stats[gt_label]["total"] += int(count_holder[2][i])
+        try:
+            stats[gt_label]["total"] += int(count_holder[2][i])
+        except KeyError:
+            pass
+
     for batch_id, m in enumerate(merged_iou_map):
         true_labels = []
         for i, sorted_id in enumerate(sorted_ids[batch_id]):
