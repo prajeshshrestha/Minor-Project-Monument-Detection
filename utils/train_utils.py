@@ -52,12 +52,14 @@ def scheduler(epoch):
     outputs:
         learning_rate = float learning rate value
     """
-    if epoch < 100:
+    if epoch < 50:
+        return 1e-3
+    elif epoch < 150:
         return 1e-4
-    elif epoch < 125:
+    elif epoch < 175:
         return 1e-5
     else:
-        return 1e-5
+        return 1e-4
 
 def get_step_size(total_items, batch_size):
     """Get step size for given total item size and batch size.
