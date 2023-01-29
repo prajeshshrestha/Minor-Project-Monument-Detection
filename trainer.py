@@ -42,7 +42,8 @@ val_data = val_data.padded_batch(batch_size, padded_shapes=data_shapes, padding_
 ssd_model = get_model(hyper_params)
 ssd_custom_losses = CustomLoss(hyper_params["neg_pos_ratio"], hyper_params["loc_loss_alpha"])
 ssd_model.compile(optimizer=Adam(learning_rate=1e-3),
-                  loss=[ssd_custom_losses.loc_loss_fn, ssd_custom_losses.conf_loss_fn])
+                  loss=[ssd_custom_losses.loc_loss_fn, ssd_custom_losses.conf_loss_fn],
+                  metrics = [tf.keras.metrics.Accuracy()])
 init_model(ssd_model)
 #
 ssd_model_path = io_utils.get_model_path(backbone)

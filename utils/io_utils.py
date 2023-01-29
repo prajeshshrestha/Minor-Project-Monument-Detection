@@ -59,4 +59,5 @@ def handle_gpu_compatibility():
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except Exception as e:
+        print('ISSUES DUE TO HANDLING GPU or SOMETHING')
         print(e)
