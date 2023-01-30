@@ -19,7 +19,7 @@ def preprocessing(image_data, final_height, final_width, augmentation_fn=None, e
     """
     img = image_data["image"]
     gt_boxes = image_data["objects"]["bbox"]
-    gt_labels = tf.cast(image_data["objects"]["label"], tf.int32)
+    gt_labels = tf.cast(image_data["objects"]["label"] , tf.int32)
     img = tf.image.convert_image_dtype(img, tf.float32)
     img = tf.image.resize(img, (final_height, final_width))
 
