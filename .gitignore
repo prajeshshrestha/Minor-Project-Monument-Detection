@@ -1,4 +1,3 @@
-__pycache__
-data/*
-trained/*
-logs/*
+trained/
+test_images/
+Curves and Graphs/
