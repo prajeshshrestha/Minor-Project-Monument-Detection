@@ -120,11 +120,12 @@ def get_custom_imgs(custom_image_path):
     return img_paths
 
 def check_and_rotate(img):
+    exif_dict = None
     if "exif" in img.info:
         exif_dict = piexif.load(img.info['exif'])
-    if piexif.ImageIFD.Orientation in exif_dict['0th']:
-        if exif_dict['0th'][piexif.ImageIFD.Orientation] == 6:
-            return True
+        if piexif.ImageIFD.Orientation in exif_dict['0th']:
+            if exif_dict['0th'][piexif.ImageIFD.Orientation] == 6:
+                return True
     return False
 
 def custom_data_generator(img_paths, final_height, final_width):
