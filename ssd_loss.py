@@ -32,6 +32,7 @@ class CustomLoss(object):
         #
         return loc_loss * self.loc_loss_alpha
 
+
     def conf_loss_fn(self, actual_labels, pred_labels):
         """Calculating SSD confidence loss value by performing hard negative mining as mentioned in the paper.
         inputs:
@@ -61,5 +62,10 @@ class CustomLoss(object):
         conf_loss = tf.reduce_sum(final_mask * conf_loss_for_all, axis=-1)
         total_pos_bboxes = tf.where(tf.equal(total_pos_bboxes, tf.constant(0.0)), tf.constant(1.0), total_pos_bboxes)
         conf_loss = conf_loss / total_pos_bboxes
+
+
+        # conf_loss = tf.reduce_sum(conf_loss_for_all, axis=-1)
+        # total_pos_bboxes = tf.where(tf.equal(total_pos_bboxes, tf.constant(0.0)), tf.constant(1.0), total_pos_bboxes)
+        # conf_loss = conf_loss / total_pos_bboxes
         #
         return conf_loss
