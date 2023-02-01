@@ -17,7 +17,7 @@ class CustomLoss(object):
         # Localization / bbox / regression loss calculation for all bboxes
         loc_loss_fn = tf.losses.Huber(reduction=tf.losses.Reduction.NONE)
         loc_loss_for_all = loc_loss_fn(actual_deltas, pred_deltas)
-        # After tf 2.2.0 version, the huber calculates mean over the last axis
+
         loc_loss_for_all = tf.cond(tf.greater(tf.rank(loc_loss_for_all), tf.constant(2)),
                                    lambda: tf.reduce_sum(loc_loss_for_all, axis=-1),
                                    lambda: loc_loss_for_all * tf.cast(tf.shape(pred_deltas)[-1], dtype=tf.float32))
